@@ -1,0 +1,21 @@
+{
+  "name": "recipe-suggestion",
+  "version": "1.0.0",
+  "description": "Insert ingredients and get a recipe",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Cooking",
+    "Recipe",
+    "Food",
+    "Suggestion"
+  ],
+  "author": "Rafael Piloto",
+  "license": "MIT",
+  "dependencies": {
+    "csvtojson": "^2.0.10",
+    "express": "^4.17.1"
+  }
+}
