@@ -24,9 +24,16 @@ const route = app.listen(PORT, () => {
 	console.log("Server is up and running!");
 });
 
-app.get("/get-recipes", (req, res) => {
+app.get("/api/get-recipes/:set", (req, res) => {
 	if (data !== undefined) {
-		res.json(data["0"]);
+		let set = req.params.set || 1;
+		let min_range = 25 * set - 25;
+		let max_range = 25 * set;
+		let recipes = [];
+		for (let i = min_range; i < max_range; i++) {
+			recipes.push(data["" + i]);
+		}
+		res.json(recipes);
 	} else {
 		res.json({
 			status: 404,
