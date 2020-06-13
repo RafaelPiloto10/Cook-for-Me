@@ -1,27 +1,22 @@
 const csv = require("csvtojson");
 const express = require("express");
+const recipe = require("./api/recipe");
 
 const PORT = process.env.PORT || 3000;
 
 let data;
-
-const process_data = async () => {
-	console.log("Loading recipes...");
-	const recipes = await csv().fromFile(
-		"./data/311962_783630_bundle_archive/RAW_recipes.csv"
-	);
-	console.log("Loaded recipes!");
-	data = recipes;
-};
-
-process_data();
+let common_ingredients;
+let all_ingredients;
 
 const app = express();
 app.use(express.static("public"));
 
 console.log("Booting server...");
-const route = app.listen(PORT, () => {
+const route = app.listen(PORT, async () => {
 	console.log("Server is up and running!");
+	data = await recipe.load_recipes();
+	common_ingredients = await recipe.load_common_ingredients();
+	all_ingredients = await recipe.load_unique_ingredients();
 });
 
 app.get("/api/get-recipes/:set", (req, res) => {
