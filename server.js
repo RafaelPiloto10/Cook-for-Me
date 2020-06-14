@@ -36,3 +36,16 @@ app.get("/api/get-recipes/:set", (req, res) => {
 		});
 	}
 });
+
+app.get("/api/get-recipe/:id", (req, res) => {
+	res.json(recipe.get_recipe_by_id(data, req.params.id));
+});
+
+app.get("/api/get-recipes/", (req, res) => {
+	let ingredients = req.query.ingredients.split(",");
+	// TODO: Implement this hippty doopty
+	res.json({
+		status: 200,
+		message: "Not implemented -- try again later",
+	});
+});
