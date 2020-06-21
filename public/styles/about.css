@@ -3,6 +3,20 @@ html {
     min-height: 100%;
 }
 
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 50px;
+    background-image: url("../assets/images/vegatables.jpg");
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
 .nav-link {
     color: white !important;
 }

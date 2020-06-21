@@ -23,6 +23,10 @@ app.get("/search", (req, res) => {
 	res.status(200).send("/search");
 });
 
+app.get("/about", (req, res) => {
+	res.status(200).send("/about");
+});
+
 app.get("/api/get-recipes/:set", (req, res) => {
 	if (data !== undefined) {
 		let set = req.params.set || 1;
