@@ -19,6 +19,10 @@ const route = app.listen(PORT, async () => {
 	all_ingredients = await recipe.load_unique_ingredients();
 });
 
+app.get("/search", (req, res) => {
+	res.status(200).send("/search");
+});
+
 app.get("/api/get-recipes/:set", (req, res) => {
 	if (data !== undefined) {
 		let set = req.params.set || 1;
