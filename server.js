@@ -57,3 +57,16 @@ app.get("/api/get-recipes/", (req, res) => {
 		message: "Not implemented -- try again later",
 	});
 });
+
+
+app.get("/unique-ingredients-list", (req, res) => {
+	if (all_ingredients !== undefined) {
+		res.status(200).json({
+			"ingredients": all_ingredients
+		});
+	} else {
+		res.status(204).json({
+			"message": "Ingredients have not yet loaded"
+		});
+	}
+});

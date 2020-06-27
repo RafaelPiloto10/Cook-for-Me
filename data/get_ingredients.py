@@ -9,7 +9,7 @@ with open('311962_783630_bundle_archive/RAW_recipes.csv', newline='') as csvfile
     for row in data:
         for ingredient in row['ingredients'].strip('][').split(', '):
             if ingredient not in ingredients:
-                ingredients.append(ingredient)
+                ingredients.append(ingredient[1:-1])
 
 print('Saving ingredients...')
 ingredients_file = open('all_ingredients.txt', 'w')
