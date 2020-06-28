@@ -146,7 +146,8 @@ function update_buttons() {
     if (buttons.length > 0) {
         for (let i = 0; i < buttons.length; i++) {
             buttons[i].onclick = (e) => {
-                let innertext = e.originalTarget.parentNode.innerText;
+                console.log(e);
+                let innertext = e.srcElement.parentNode.innerText;
                 let ingredient = innertext.substring(0, innertext.length - 1).toLowerCase();
                 for (let i = 0; i < ingredients.length; i++) {
                     if (ingredient.normalize("NFKC").trim() === ingredients[i].normalize("NFKC").trim()) {
@@ -154,7 +155,7 @@ function update_buttons() {
                     }
                 }
                 console.log(ingredients);
-                e.originalTarget.parentNode.remove();
+                e.srcElement.parentNode.remove();
             }
 
         }
