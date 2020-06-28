@@ -37,21 +37,27 @@
     </nav>
 
     <div class="container">
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container text-center">
+        <div class="jumbotron jumbotron-fluid" style="height: 100%;">
+            <div class="container text-center" style="height: 100%;">
                 <h1 class="display-3">Search for Recipes!</h1>
                 <p class="lead">Enter the main ingredients that you have at home.</p>
                 <hr class="my-2">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <div class="input-group autocomplete" style="width: 300px;">
-                            <input type="text" class="form-control" id="myInput" placeholder="Enter an ingredient.."
-                                type="text" autocomplete="off">
-                            <button id="nameText" type="button" class="btn btn-danger">
-                                X
-                            </button>
+                <div id="spinner" class="spinner-border text-success"></div>
+                <div class="row">
+                    <div id="inputs" class="col-12 col-md-6 loading">
+                        <div class="form-group">
+                            <div class="input-group autocomplete">
+                                <input type="text" class="form-control" id="myInput" placeholder="Enter an ingredient.."
+                                    type="text" autocomplete="off">
+                                <button id="add-button" type="button" class="btn btn-success">
+                                    add
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <ul id="ingredients-list" class="list-group col-12 col-md-6 list-group-flush">
+
+                    </ul>
                 </div>
             </div>
 

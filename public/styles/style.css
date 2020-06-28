@@ -27,3 +27,11 @@ html {
     height: 10%;
     padding-top: 10%;
 }
+
+.loading {
+    visibility: hidden;
+}
+
+.hidden {
+    visibility: hidden;
+}

@@ -20,15 +20,19 @@ function autocomplete(inp, arr) {
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].toUpperCase().includes(val.toUpperCase())) {
+            if (arr[i].toLowerCase().includes(val.toLowerCase())) {
                 /*create a DIV element for each matching element:*/
                 b = document.createElement("DIV");
                 /*make the matching letters bold:*/
-                b.innerHTML = arr[i].substr(0, arr[i].indexOf(val));
-                b.innerHTML += "<strong>" + arr[i].substr(arr[i].indexOf(val), arr[i].indexOf(val) + val.length) + "</strong>";
-                b.innerHTML += arr[i].substr(arr[i].indexOf(val) + val.length);
+                let search = val.toLowerCase();
+                let match = arr[i].toLowerCase();
+
+                b.innerHTML = match.substr(0, match.indexOf(search));
+                b.innerHTML += "<strong>" + match.substr(match.indexOf(search), search.length) + "</strong>";
+                b.innerHTML += match.substr(match.indexOf(search) + search.length);
+
                 /*insert a input field that will hold the current array item's value:*/
-                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                b.innerHTML += "<input type='hidden' value=\"" + match + "\">";
                 /*execute a function when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function (e) {
                     /*insert the value for the autocomplete text field:*/
@@ -101,10 +105,58 @@ function autocomplete(inp, arr) {
     });
 }
 
+let ingredients_loaded = false;
+let ingredients = [];
+
 window.onload = async (e) => {
     console.log("Getting ingredients..");
-    fetch("/unique-ingredients-list").then(res => res.json()).then((ingredients) => {
-        console.log("Got ingredients list..");
-        autocomplete(document.getElementById("myInput"), ingredients.ingredients);
-    });
+    while (!ingredients_loaded) {
+        try {
+            ingredients_loaded = true;
+            await fetch("/unique-ingredients-list").then(res => res.json()).then((ingredients) => {
+                console.log("Got ingredients list..");
+                autocomplete(document.getElementById("myInput"), ingredients.ingredients);
+            });
+
+            let inputs = document.getElementById("inputs");
+            let spinner = document.getElementById("spinner");
+            inputs.classList.remove("loading")
+            spinner.classList.add("hidden");
+        } catch (error) {
+            continue;
+        }
+    }
+
+
+    let add_button = document.getElementById("add-button");
+    let input = document.getElementById("myInput");
+    let ingredients_list = document.getElementById("ingredients-list");
+    add_button.onclick = (e) => {
+        ingredients.push(input.value);
+        console.log(ingredients);
+        ingredients_list.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">${input.value}<button id="remove-btn" class="badge badge-danger badge-pill btn">X</button></li>`;
+        input.value = ""
+        update_buttons();
+    }
+
+}
+
+function update_buttons() {
+    let buttons = document.querySelectorAll("#remove-btn");
+    if (buttons.length > 0) {
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].onclick = (e) => {
+                let innertext = e.originalTarget.parentNode.innerText;
+                let ingredient = innertext.substring(0, innertext.length - 1).toLowerCase();
+                for (let i = 0; i < ingredients.length; i++) {
+                    if (ingredient.normalize("NFKC").trim() === ingredients[i].normalize("NFKC").trim()) {
+                        ingredients.splice(i, 1);
+                    }
+                }
+                console.log(ingredients);
+                e.originalTarget.parentNode.remove();
+            }
+
+        }
+    }
 }

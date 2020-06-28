@@ -40,7 +40,7 @@ input {
     top: 100%;
     left: 0;
     right: 0;
-    max-height: 500px !important;
+    max-height: 500% !important;
     overflow: scroll;
 }
 
